@@ -736,8 +736,15 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
 
       List<KeyValue> metricList = experimentRunDAO.getExperimentRunMetrics(request.getId());
       for (KeyValue metric : metricList) {
-        if (metric.getKey() == request.getMetric().getKey())
-          throw new IllegalArgumentException("Metric being logged already exists.");
+        if (metric.getKey() == request.getMetric().getKey()) {
+          Status status =
+              Status.newBuilder()
+                  .setCode(Code.ALREADY_EXISTS.getNumber())
+                  .setMessage("Metric being logged already exists.")
+                  .addDetails(Any.pack(LogMetric.Response.getDefaultInstance()))
+                  .build();
+          throw StatusProto.toStatusRuntimeException(status);
+        }
       }
 
       ExperimentRun updatedExperimentRun =
@@ -968,8 +975,15 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
       List<KeyValue> hyperparameterList =
           experimentRunDAO.getExperimentRunHyperparameters(request.getId());
       for (KeyValue hyperparameter : hyperparameterList) {
-        if (hyperparameter.getKey() == request.getHyperparameter().getKey())
-          throw new IllegalArgumentException("Hyperparameter being logged already exists.");
+        if (hyperparameter.getKey() == request.getHyperparameter().getKey()) {
+          Status status =
+              Status.newBuilder()
+                  .setCode(Code.ALREADY_EXISTS.getNumber())
+                  .setMessage("Hyperparameter being logged already exists.")
+                  .addDetails(Any.pack(LogHyperparameter.Response.getDefaultInstance()))
+                  .build();
+          throw StatusProto.toStatusRuntimeException(status);
+        }
       }
 
       ExperimentRun updatedExperimentRun =
