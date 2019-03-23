@@ -734,6 +734,12 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
         throw StatusProto.toStatusRuntimeException(status);
       }
 
+      List<KeyValue> metricList = experimentRunDAO.getExperimentRunMetrics(request.getId());
+      for (KeyValue metric : metricList) {
+        if (metric.getKey() == request.getMetric().getKey())
+          throw new IllegalArgumentException("Metric being logged already exists.");
+      }
+
       ExperimentRun updatedExperimentRun =
           experimentRunDAO.logMetric(request.getId(), request.getMetric());
       responseObserver.onNext(
@@ -957,6 +963,13 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
                 .addDetails(Any.pack(LogHyperparameter.Response.getDefaultInstance()))
                 .build();
         throw StatusProto.toStatusRuntimeException(status);
+      }
+
+      List<KeyValue> hyperparameterList =
+          experimentRunDAO.getExperimentRunHyperparameters(request.getId());
+      for (KeyValue hyperparameter : hyperparameterList) {
+        if (hyperparameter.getKey() == request.getHyperparameter().getKey())
+          throw new IllegalArgumentException("Hyperparameter being logged already exists.");
       }
 
       ExperimentRun updatedExperimentRun =
