@@ -522,7 +522,11 @@ public class ProjectServiceImpl extends ProjectServiceImplBase {
     try {
 
       List<Project> projects = projectDAO.getProjects();
-      responseObserver.onNext(GetProjects.Response.newBuilder().addAllProjectsByUser(projects).build());
+      GetProjects.Response.Builder projectsBuilder = GetProjects.Response.newBuilder();
+      for (Project project : projects) {
+        projectsBuilder.addProjects(project);
+      }
+      responseObserver.onNext(projectsBuilder.build());
       responseObserver.onCompleted();
 
     } catch (StatusRuntimeException e) {
@@ -596,8 +600,13 @@ public class ProjectServiceImpl extends ProjectServiceImplBase {
 
       List<Project> projects = projectDAO.getProjects(ModelDBConstants.NAME, request.getName());
 
-      responseObserver.onNext(
-          GetProjectByName.Response.newBuilder().addAllProjects(projects).build());
+      GetProjectByName.Response.Builder projectsBuilder = GetProjectByName.Response.newBuilder();
+      // hack, verify
+      if (projects.size() > 0) {
+        projectsBuilder.addProjectByUser(projects.get(0));
+      }
+
+      responseObserver.onNext(projectsBuilder.build());
       responseObserver.onCompleted();
 
     } catch (StatusRuntimeException e) {

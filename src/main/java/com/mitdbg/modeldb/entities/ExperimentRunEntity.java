@@ -53,9 +53,6 @@ public class ExperimentRunEntity {
     setFeatures(
         RdbmsUtils.convertFromFeatureListToFeatureMappingList(
             this, experimentRun.getFeaturesList()));
-    setCloudArtifacts(
-        RdbmsUtils.convertFromArtifactsToArtifactEntityList(
-            this, ModelDBConstants.CLOUD_ARTIFACTS, experimentRun.getCloudArtifactsList()));
     setJob_id(experimentRun.getJobId());
   }
 
@@ -319,8 +316,6 @@ public class ExperimentRunEntity {
         /*.addAllObservations(values)*/
         .addAllFeatures(RdbmsUtils.convertFromFeatureEntityListToFeatureList(getFeatures()))
         .addAllTags(RdbmsUtils.convertFromTagsMappingListToTagList(getTags()))
-        .addAllCloudArtifacts(
-            RdbmsUtils.convertFromArtifactEntityListToArtifacts(getCloudArtifacts()))
         .setJobId(getJob_id())
         .build();
   }

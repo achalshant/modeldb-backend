@@ -231,28 +231,6 @@ public interface ExperimentRunDAO {
       throws InvalidProtocolBufferException;
 
   /**
-   * ExperimentRun has cloud_artifacts field. Add new CloudArtifact in that cloud_artifacts List.
-   *
-   * @param experimentRunId
-   * @param artifact
-   * @return ExperimentRun updated experimentRun
-   * @throws InvalidProtocolBufferException
-   */
-  ExperimentRun storeCloudArtifact(String experimentRunId, Artifact artifact)
-      throws InvalidProtocolBufferException;
-
-  /**
-   * ExperimentRun has cloud_artifacts field. delete artifact from that cloud_artifacts List.
-   *
-   * @param experimentRunId
-   * @param clientKey
-   * @return ExperimentRun updated experimentRun
-   * @throws InvalidProtocolBufferException
-   */
-  Boolean deleteCloudArtifact(String experimentRunId, String clientKey)
-      throws InvalidProtocolBufferException;
-
-  /**
    * Return list of experimentRuns based on FindExperimentRuns queryParameters
    *
    * @param FindExperimentRuns queryParameters --> query parameters for filtering experimentRuns

@@ -585,58 +585,6 @@ public class ExperimentRunDAOMongoImpl implements ExperimentRunDAO {
   }
 
   @Override
-  public ExperimentRun storeCloudArtifact(String experimentRunId, Artifact artifact)
-      throws InvalidProtocolBufferException {
-    Document queryExperimentRun = new Document();
-    queryExperimentRun.append(ModelDBConstants.ID, experimentRunId);
-
-    Document updatedExperimentRun = new Document();
-    String json = ModelDBUtils.getStringFromProtoObject(artifact);
-    Document documentAttributes = Document.parse(json);
-    updatedExperimentRun.append(ModelDBConstants.ARTIFACTS, documentAttributes);
-
-    long updatedCount =
-        documentService.updateOne(queryExperimentRun, new Document("$push", updatedExperimentRun));
-    if (updatedCount > 0) {
-      Document document =
-          (Document) documentService.findByKey(ModelDBConstants.ID, experimentRunId);
-      return convertExperimentRunFromDocument(document);
-    } else {
-      String errorMessage =
-          "Added cloud artifacts value is already present in ExperimentRun cloud_artifacts field";
-      LOGGER.log(Level.WARNING, errorMessage);
-      Status status =
-          Status.newBuilder().setCode(Code.ALREADY_EXISTS_VALUE).setMessage(errorMessage).build();
-      throw StatusProto.toStatusRuntimeException(status);
-    }
-  }
-
-  @Override
-  public Boolean deleteCloudArtifact(String experimentRunId, String clientKey)
-      throws InvalidProtocolBufferException {
-    Document queryExperimentRun = new Document();
-    queryExperimentRun.append(ModelDBConstants.ID, experimentRunId);
-
-    Document updatedExperimentRun = new Document();
-    updatedExperimentRun.append(
-        ModelDBConstants.ARTIFACTS, new Document(ModelDBConstants.KEY, clientKey));
-
-    long updatedCount =
-        documentService.updateOne(queryExperimentRun, new Document("$pull", updatedExperimentRun));
-
-    if (updatedCount > 0) {
-      return true;
-    } else {
-      String errorMessage =
-          "Given clientKey value is already deleted from ExperimentRun cloud_artifacts field";
-      LOGGER.log(Level.WARNING, errorMessage);
-      Status status =
-          Status.newBuilder().setCode(Code.ALREADY_EXISTS_VALUE).setMessage(errorMessage).build();
-      throw StatusProto.toStatusRuntimeException(status);
-    }
-  }
-
-  @Override
   public List<ExperimentRun> findExperimentRuns(FindExperimentRuns queryParameters)
       throws InvalidProtocolBufferException {
 

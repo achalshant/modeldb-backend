@@ -367,32 +367,6 @@ public class ExperimentRunDAORdbImpl implements ExperimentRunDAO {
 
   @Override
   @Transactional
-  public ExperimentRun storeCloudArtifact(String experimentRunId, Artifact artifact)
-      throws InvalidProtocolBufferException {
-    // TODO Auto-generated method stub
-    Status status =
-        Status.newBuilder()
-            .setCode(Code.UNIMPLEMENTED_VALUE)
-            .setMessage("this method is under development")
-            .build();
-    throw StatusProto.toStatusRuntimeException(status);
-  }
-
-  @Override
-  @Transactional
-  public Boolean deleteCloudArtifact(String experimentRunId, String clientKey)
-      throws InvalidProtocolBufferException {
-    // TODO Auto-generated method stub
-    Status status =
-        Status.newBuilder()
-            .setCode(Code.UNIMPLEMENTED_VALUE)
-            .setMessage("this method is under development")
-            .build();
-    throw StatusProto.toStatusRuntimeException(status);
-  }
-
-  @Override
-  @Transactional
   public List<ExperimentRun> findExperimentRuns(FindExperimentRuns queryParameters)
       throws InvalidProtocolBufferException {
     // TODO Auto-generated method stub
