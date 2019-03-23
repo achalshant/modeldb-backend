@@ -1,0 +1,50 @@
+#ModelDB Properties
+grpcServer:
+  port: 8085
+
+#Entity name list
+entities:
+  projectEntity: Project
+  experimentEntity: Experiment
+  experimentRunEntity: ExperimentRun
+  artifactStoreMappingEntity: ArtifactStoreMapping
+  jobEntity: Job
+
+# Database settings (type mongodb, couchbasedb, rdbms etc..)
+database:
+  DBType: rdbms
+  MongoDBConfiguration:
+    mongoDBDatabaseName: modeldb
+    mongoDBHost: mongo-backend
+    mongoDBPort: 27017
+    mongoDBUsername: modeldbAdmin
+    mongoDBPassword: Admin@123
+  RdbConfiguration:
+    RdbDatabaseName: modeldb
+    RdbDriver: "com.mysql.cj.jdbc.Driver"
+    RdbDialect: "org.hibernate.dialect.MySQL5Dialect"
+    RdbUrl: "jdbc:mysql://localhost:3306"
+    RdbUsername: root
+    RdbPassword: root
+
+# Test Database settings (type mongodb, couchbasedb, rdbms etc..)
+test-database:
+  DBType: rdbms
+  MongoDBConfiguration:
+    mongoDBDatabaseName: modeldb_test
+    mongoDBHost: mongo-backend
+    mongoDBPort: 27017
+    mongoDBUsername: modeldbTestAdmin
+    mongoDBPassword: testAdmin@123
+  RdbConfiguration:
+    RdbDatabaseName: modeldb_test
+    RdbDriver: "com.mysql.cj.jdbc.Driver"
+    RdbDialect: "org.hibernate.dialect.MySQL5Dialect"
+    RdbUrl: "jdbc:mysql://localhost:3306"
+    RdbUsername: root
+    RdbPassword: root
+
+#ArtifactStore Properties
+artifactStore_grpcServer:
+  host: artifact-store-backend
+  port: 8086

@@ -1,0 +1,27 @@
+#ModelDB Properties
+grpcServer:
+  port: 8085
+
+#Entity name list
+entities:
+  projectEntity: Project
+  experimentEntity: Experiment
+  experimentRunEntity: ExperimentRun
+  artifactStoreMappingEntity: ArtifactStoreMapping
+  collaboratorEntity: Collaborator
+  jobEntity: Job
+
+# Test Database settings (type mongodb, couchbasedb etc..)
+test-database:
+  DBType: mongodb
+  MongoDBConfiguration:
+    mongoDBDatabaseName: mongodb_test_1
+    mongoDBHost: localhost #mongo-backend
+    mongoDBPort: 27017
+    mongoDBUsername: 
+    mongoDBPassword: 
+
+#ArtifactStore Properties
+artifactStore_grpcServer:
+  host: localhost #artifact-store-backend
+  port: 8086

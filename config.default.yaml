@@ -1,0 +1,41 @@
+#ModelDB Properties
+grpcServer:
+  port: 8085
+
+#Entity name list
+entities:
+  projectEntity: Project
+  experimentEntity: Experiment
+  experimentRunEntity: ExperimentRun
+  artifactStoreMappingEntity: ArtifactStoreMapping
+  collaboratorEntity: Collaborator
+
+# Database settings (type mongodb, couchbasedb etc..)
+database:
+  DBType: mongodb
+  MongoDBConfiguration:
+    mongoDBDatabaseName: modeldb
+    mongoDBHost: mongo-backend
+    mongoDBPort: 27017
+    mongoDBUsername: 
+    mongoDBPassword: 
+
+# Test Database settings (type mongodb, couchbasedb etc..)
+test-database:
+  DBType: mongodb
+  MongoDBConfiguration:
+    mongoDBDatabaseName: modeldb_test
+    mongoDBHost: mongo-backend
+    mongoDBPort: 27017
+    mongoDBUsername: 
+    mongoDBPassword: 
+
+#ArtifactStore Properties
+artifactStore_grpcServer:
+  host: artifact-store-backend
+  port: 8086
+
+#AuthService Properties
+authService:
+  host: uacservice # Docker container name OR docker IP
+  port: 50051
