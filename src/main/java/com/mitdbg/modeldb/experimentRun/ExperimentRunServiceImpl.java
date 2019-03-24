@@ -737,8 +737,10 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
       LOGGER.log(Level.WARNING, "in log metric");
       List<KeyValue> metricList = experimentRunDAO.getExperimentRunMetrics(request.getId());
       LOGGER.log(Level.WARNING, metricList.toString());
+      LOGGER.log(Level.WARNING, "Req" + request.getMetric().getKey());
+      LOGGER.log(Level.WARNING, "Req Metric" + request.getMetric());
       for (KeyValue metric : metricList) {
-        if (metric.getKey() == request.getMetric().getKey()) {
+        if (metric.getKey().equals(request.getMetric().getKey())) {
           LOGGER.log(Level.WARNING, "Found matching metric");
           Status status =
               Status.newBuilder()
