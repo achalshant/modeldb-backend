@@ -734,12 +734,12 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
         throw StatusProto.toStatusRuntimeException(status);
       }
 
-      LOGGER.log(Level.DEBUG, "in log metric");
+      LOGGER.log(Level.WARNING, "in log metric");
       List<KeyValue> metricList = experimentRunDAO.getExperimentRunMetrics(request.getId());
-      LOGGER.log(Level.DEBUG, metricList);
+      LOGGER.log(Level.WARNING, metricList);
       for (KeyValue metric : metricList) {
           if (metric.getKey() == request.getMetric().getKey()) {
-              LOGGER.log(Level.DEBUG, "Found matching metric");
+              LOGGER.log(Level.WARNING, "Found matching metric");
               Status status =
                   Status.newBuilder()
                       .setCode(Code.ALREADY_EXISTS.getNumber())
@@ -755,7 +755,7 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
       responseObserver.onNext(
           LogMetric.Response.newBuilder().setExperimentRun(updatedExperimentRun).build());
       responseObserver.onCompleted();
-      LOGGER.log(Level.DEBUG, "successfully wrote metric" + request.getMetric().getKey());
+      LOGGER.log(Level.WARNING, "successfully wrote metric" + request.getMetric().getKey());
     } catch (StatusRuntimeException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       responseObserver.onError(e);
