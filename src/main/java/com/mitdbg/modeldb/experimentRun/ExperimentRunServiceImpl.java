@@ -734,12 +734,24 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
         throw StatusProto.toStatusRuntimeException(status);
       }
 
+      List<KeyValue> metricList = experimentRunDAO.getExperimentRunMetrics(request.getId());
+      for (KeyValue metric : metricList) {
+        if (metric.getKey().equals(request.getMetric().getKey())) {
+          Status status =
+              Status.newBuilder()
+                  .setCode(Code.ALREADY_EXISTS.getNumber())
+                  .setMessage("Metric being logged already exists.")
+                  .addDetails(Any.pack(LogMetric.Response.getDefaultInstance()))
+                  .build();
+          throw StatusProto.toStatusRuntimeException(status);
+        }
+      }
+
       ExperimentRun updatedExperimentRun =
           experimentRunDAO.logMetric(request.getId(), request.getMetric());
       responseObserver.onNext(
           LogMetric.Response.newBuilder().setExperimentRun(updatedExperimentRun).build());
       responseObserver.onCompleted();
-
     } catch (StatusRuntimeException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       responseObserver.onError(e);
@@ -957,6 +969,20 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
                 .addDetails(Any.pack(LogHyperparameter.Response.getDefaultInstance()))
                 .build();
         throw StatusProto.toStatusRuntimeException(status);
+      }
+
+      List<KeyValue> hyperparameterList =
+          experimentRunDAO.getExperimentRunHyperparameters(request.getId());
+      for (KeyValue hyperparameter : hyperparameterList) {
+        if (hyperparameter.getKey().equals(request.getHyperparameter().getKey())) {
+          Status status =
+              Status.newBuilder()
+                  .setCode(Code.ALREADY_EXISTS.getNumber())
+                  .setMessage("Hyperparameter being logged already exists.")
+                  .addDetails(Any.pack(LogHyperparameter.Response.getDefaultInstance()))
+                  .build();
+          throw StatusProto.toStatusRuntimeException(status);
+        }
       }
 
       ExperimentRun updatedExperimentRun =
