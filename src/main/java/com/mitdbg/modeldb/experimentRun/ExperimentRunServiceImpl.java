@@ -734,14 +734,9 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
         throw StatusProto.toStatusRuntimeException(status);
       }
 
-      LOGGER.log(Level.WARNING, "in log metric");
       List<KeyValue> metricList = experimentRunDAO.getExperimentRunMetrics(request.getId());
-      LOGGER.log(Level.WARNING, metricList.toString());
-      LOGGER.log(Level.WARNING, "Req" + request.getMetric().getKey());
-      LOGGER.log(Level.WARNING, "Req Metric" + request.getMetric());
       for (KeyValue metric : metricList) {
         if (metric.getKey().equals(request.getMetric().getKey())) {
-          LOGGER.log(Level.WARNING, "Found matching metric");
           Status status =
               Status.newBuilder()
                   .setCode(Code.ALREADY_EXISTS.getNumber())
@@ -757,8 +752,6 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
       responseObserver.onNext(
           LogMetric.Response.newBuilder().setExperimentRun(updatedExperimentRun).build());
       responseObserver.onCompleted();
-      LOGGER.log(
-          Level.WARNING, "successfully wrote metric " + request.getMetric().getKey().toString());
     } catch (StatusRuntimeException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       responseObserver.onError(e);
@@ -981,7 +974,7 @@ public class ExperimentRunServiceImpl extends ExperimentRunServiceImplBase {
       List<KeyValue> hyperparameterList =
           experimentRunDAO.getExperimentRunHyperparameters(request.getId());
       for (KeyValue hyperparameter : hyperparameterList) {
-        if (hyperparameter.getKey() == request.getHyperparameter().getKey()) {
+        if (hyperparameter.getKey().equals(request.getHyperparameter().getKey())) {
           Status status =
               Status.newBuilder()
                   .setCode(Code.ALREADY_EXISTS.getNumber())
