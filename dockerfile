@@ -13,6 +13,6 @@ ENV NAME modeldb-backend
 ENV VERTA_MODELDB_CONFIG /config/config.yaml
 
 ENTRYPOINT ["bash", "-c"]
-CMD ["./wait-for-it.sh mysql-backend:3306 --timeout=30 && java -jar modeldb-1.0-SNAPSHOT-client-build.jar"]
+CMD ["./wait-for-it.sh modeldb-mysql-backend:3306 --timeout=30 && java -jar modeldb-1.0-SNAPSHOT-client-build.jar"]
 
 # ./wait-for-it.sh artifact-store-backend:8086 --timeout=30 && 
