@@ -341,8 +341,6 @@ public class App {
     // --------------- Stop Initialize Job ServiceImpl --------------------------
 
     LOGGER.info("All services initialized and resolved dependency before server start");
-    LOGGER.info("Hello from Achal's ModelDB backend!");
-
   }
 
   public void setProjectEntity(String projectEntity) {
